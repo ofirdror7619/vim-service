@@ -11,9 +11,9 @@ const SECRET_KEY = 'vim_service_secret_key';
 
 const users = [];
 
-let userId = 1;
+global.userId = 1;
 createNewUser(userId, 'user1', 'password1');
-userId++;
+createNewUser(userId, 'user2', 'password2');
 
 app.use(bodyParser.json());
 
@@ -62,6 +62,7 @@ app.post('/post', authenticateJWT, (req, res) => {
   });
 
   function createNewUser(userId, username, password) {
-    const user1 = new vimUser(userId, username, password);
-    users.push(user1);
+    const user = new vimUser(global.userId, username, password);
+    users.push(user);
+    global.userId++;
   }
