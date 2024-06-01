@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
+const vimUser = require('./vimUser');
 
 const app = express();
 
@@ -8,7 +9,11 @@ const PORT = process.env.PORT || 3000;
 
 const SECRET_KEY = 'vim_service_secret_key';
 
-const users = [{ id: 1, username: 'user1', password: 'password1' }];
+const users = [];
+
+let userId = 1;
+createNewUser(userId, 'user1', 'password1');
+userId++;
 
 app.use(bodyParser.json());
 
@@ -55,3 +60,8 @@ app.post('/post', authenticateJWT, (req, res) => {
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
+
+  function createNewUser(userId, username, password) {
+    const user1 = new vimUser(userId, username, password);
+    users.push(user1);
+  }
